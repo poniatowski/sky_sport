@@ -1,9 +1,10 @@
 <?php
+namespace App\Controller;
 
-include_once(DOT . "BaseController.php");
-include_once(MODEL . "BillModel.php");
+use App\Model\BillModel;
 
-class BillController extends BaseController {
+class BillController extends BaseController
+{
     public $model;
     public $result;
 

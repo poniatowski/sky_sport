@@ -1,7 +1,6 @@
 <?php
 
-include_once(DOT . "BaseModel.php");
-
+namespace App\Model;
 
 class BillModel extends BaseModel {
 

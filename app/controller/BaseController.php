@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controller;
+
 class BaseController {
 
     public $layout;
@@ -45,12 +47,14 @@ class BaseController {
      */
     public function checkIfAjax()
     {
+        $access = false;
+
         if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             // safety ajax
-            return true;
-        } else {
-            return false;
+            $access = true;
         }
+
+        return $access;
     }
 
     /**
@@ -59,8 +63,7 @@ class BaseController {
      */
     public function createToken()
     {
-        $hash = md5(mt_rand(1,1000000) . SALT);
-        return $_SESSION['_token'] = $hash;
+        return $_SESSION['_token'] = md5(SALT . mt_rand(1,1000000) . SALT);
     }
 
     /**
