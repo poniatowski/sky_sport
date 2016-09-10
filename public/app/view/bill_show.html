@@ -1,0 +1,148 @@
+<h1> Sky Bill</h1>
+<hr>
+
+<div class="panel-body no-padding">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 no-padding">
+        <div class="panel-body bg-danger">
+            <b><i class="fa fa-list"></i> Due date:  </b>
+            <p class="ng-binding">{{ bill.statement.due }}</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 no-padding">
+        <div class="panel-body bg-info">
+            <b><i class="fa fa-bars"></i> Generated date: </b>
+            <p class="ng-binding">{{ bill.statement.generated }}</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 no-padding">
+        <div class="panel-body bg-success">
+            <b><i class="fa fa-calendar"></i> Period from: </b>
+            <p class="ng-binding">{{ bill.statement.period.from }}</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 no-padding">
+        <div class="panel-body bg-primary">
+            <b><i class="fa fa-calendar"></i> Period to: </b>
+            <p class="ng-binding">{{ bill.statement.period.to }}</p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!--Sky store-->
+<aside ng-sho="bill.skyStore" class="well">
+    <h4 class="alert alert-info">Sky Store:</h4>
+    <div ng-repeat="(key, stores) in bill.skyStore">
+        <div ng-show="key != 'total'" >
+            {{ key }}
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th class="span2">Title</th>
+                    <th class="span2">Cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="store in stores | filter:search" class="ng-scope">
+                    <td class="ng-binding">{{ store.title }}</td>
+                    <td class="ng-binding">{{ store.cost }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div ng-show="bill.skyStore.total" class="ng-binding text-right">
+        Sky Store cost: <b style="color: #c6291f; font-weight: bold;" >{{ bill.skyStore.total }}</b>
+    </div>
+
+    <hr>
+</aside>
+
+<!--Sky Packages-->
+<aside ng-show="bill.package.subscriptions" class="well">
+    <h4 class="alert alert-info">Sky Packages:</h4>
+    <!-- packages -->
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+        <tr>
+            <th class="span6">Cost</th>
+            <th class="span2">Name</th>
+            <th class="span2">Type</th>
+            <th class="span1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pack in bill.package.subscriptions | filter:search" class="ng-scope">
+            <td class="ng-binding">{{ pack.cost }}</td>
+            <td class="ng-binding">{{ pack.name }}</td>
+            <td class="ng-binding">{{ pack.type }}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <td class="ng-binding"><i>Total</i></td>
+        <td class="ng-binding">British Pound Sterling </td>
+        <td style="color: #c6291f; font-weight: bold;" class="ng-binding">{{ bill.package.total }}</td>
+        </tfoot>
+    </table>
+    <hr>
+</aside>
+
+<!--Sky calls-->
+<aside ng-show="bill.callCharges.calls" class="well">
+    <h4 class="alert alert-info">Sky Calls:</h4>
+
+    <div class="bg-white clearfix" id="filters">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th class="col-md-2">Called number</th>
+                <th class="col-md-2">Duration</th>
+                <th class="col-md-2">Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <input type="search" placeholder="Search..." ng-model="search.called" class="form-control ng-pristine ng-valid ng-touched">
+                </td>
+                <td>
+                    <input type="search" placeholder="Search..." ng-model="search.cost" class="form-control ng-pristine ng-valid ng-touched">
+                </td>
+                <td>
+                    <input type="search" placeholder="Search..." ng-model="search.duration" class="form-control ng-pristine ng-valid ng-touched">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <table ng-show="bill.callCharges.calls" class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr>
+                <th class="span6">Called</th>
+                <th class="span2">Duration</th>
+                <th class="span2">Cost</th>
+                <th class="span1"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="call in bill.callCharges.calls | filter:search" class="ng-scope">
+            <td class="ng-binding">{{ call.called }}</td>
+            <td class="ng-binding">{{ call.duration }}</td>
+            <td class="ng-binding">{{ call.cost }}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+            <td class="ng-binding"><i>Total</i></td>
+            <td class="ng-binding">British Pound Sterling </td>
+            <td style="color: #c6291f; font-weight: bold;" class="ng-binding">{{ bill.callCharges.total }}</td>
+        </tfoot>
+    </table>
+
+
+    <div class="ng-binding text-right">
+        Total invoices cost: <b style="color: #c6291f; font-weight: bold;" >{{ bill.total }}</b>
+    </div>
+</aside>

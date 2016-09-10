@@ -1,0 +1,25 @@
+<files .htaccess>
+    order allow,deny
+    deny from all
+</files>
+php_value memory_limit 170M
+
+RewriteEngine on
+
+
+Options +FollowSymlinks
+Options -Indexes
+
+
+
+RewriteCond %{REQUEST_URI} (.+)$  [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+AddDefaultCharset utf-8
+RewriteRule (.*) index.php
+
+RewriteEngine on 
+RewriteCond %{HTTP_HOST} ^www.mysite.com.*$ [NC]
+RewriteRule ^(.*)$ http://mysite.com%{REQUEST_URI} [L,R=301]  
+
+ErrorDocument 404 http://mysite.com/404.shtml
