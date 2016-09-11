@@ -1,5 +1,4 @@
 <?php
-
 define("CONFIG", "./../config/");
 
 // include config file
@@ -8,34 +7,10 @@ include_once(CONFIG . "config.ini.php");
 // if production mode hide all errors
 if(PRODUCTION_MODE) error_reporting(0);
 
-// set up basic routes for app
-if(!empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] !== '/') {
-    $len = strlen($_SERVER['REQUEST_URI']);
-    $req = substr($_SERVER['REQUEST_URI'], 1, $len);
-    switch ($req) {
-        case 'index':
-        case 'bill':
-        case '':
-            $controller = new BaseController();
-            $page = './app';
-            $baseURL = $controller->baseUrl;
-            include_once($controller->layout);
-            break;
-        case 'api/bill/show':
-            $controller = new BillController();
-            $controller->getBillDetails();
-            break;
-        case 'page':
-            break;
-        default:
-            break;
-    }
-} else {
-    $controller = new BillController();
-    $controller->getBillDetails();
-}
 
+$pRouter = new \Helpers\Router();
+$pRouter->map('GET', '/', 'BillController@getBillDetails', 'Home');
+$pRouter->map('GET', '/api/bill/show', 'BillController@getBillDetails', 'Source');
+$pRouter->map('GET', '/bill', 'BillController@main_view', 'Bill');
 
-
-
-
+$pRouter->match();

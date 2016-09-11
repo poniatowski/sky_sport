@@ -24,4 +24,13 @@ class BillController extends BaseController
         $bill = new BillModel('http://safe-plains-5453.herokuapp.com/bill.json');
         print $this->returnJson($bill->getBill('bill.json'));
     }
+
+    public function main_view()
+    {
+        $page = './app';
+        $baseURL = $this->baseUrl;
+        include_once($this->layout);
+    }
+
+
 }
